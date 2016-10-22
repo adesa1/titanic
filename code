@@ -1,0 +1,52 @@
+> getwd()
+[1] "/Users/ashwindesai"
+
+> setwd("/Users/ashwindesai/Documents")
+
+> getwd()
+
+[1] "/Users/ashwindesai/Documents"
+> df<-read.csv("titanic_original.csv")
+
+> str(df)
+'data.frame':	1309 obs. of  14 variables:
+ $ pclass   : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ survived : int  1 1 0 0 0 1 1 0 1 0 ...
+ $ name     : Factor w/ 1307 levels "Abbing, Mr. Anthony",..: 22 24 25 26 27 31 46 47 51 55 ...
+ $ sex      : Factor w/ 2 levels "female","male": 1 2 1 2 1 2 1 2 1 2 ...
+ $ age      : num  29 0.917 2 30 25 ...
+ $ sibsp    : int  0 1 1 1 1 0 1 0 2 0 ...
+ $ parch    : int  0 2 2 2 2 0 0 0 0 0 ...
+ $ ticket   : Factor w/ 929 levels "110152","110413",..: 188 50 50 50 50 125 93 16 77 826 ...
+ $ fare     : num  211 152 152 152 152 ...
+ $ cabin    : Factor w/ 187 levels "","A10","A11",..: 45 81 81 81 81 151 147 17 63 1 ...
+ $ embarked : Factor w/ 4 levels "","C","Q","S": 4 4 4 4 4 4 4 4 4 2 ...
+ $ boat     : Factor w/ 28 levels "","1","10","11",..: 13 4 1 1 1 14 3 1 28 1 ...
+ $ body     : int  NA NA NA 135 NA NA NA NA NA 22 ...
+ $ home.dest: Factor w/ 370 levels "","?Havana, Cuba",..: 310 232 232 232 232 238 163 25 23 230 ...
+ 
+> View(df)
+
+> df$embarked[df$embarked == ""] <- "S"
+
+> df$age[is.na(df$age)] <- round(mean(df$age,na.rm = TRUE))
+
+> View(df)
+
+> df$boat <- as.character(df$boat)
+
+> df$boat[is.na(df$boat)] <- "None"
+
+> View(df)
+
+> df$boat <- as.factor(df$boat)
+
+> x<- df[,10]
+> length <- length(df)
+> df[length+1]<-x
+
+> colnames(df)[colnames(df) == "V15"] <- "has_cabin_number"
+
+> df$has_cabin_number <- ifelse(df$has_cabin_number == "", 0, 1)
+
+> write.csv(df, file = "titanic_clean.csv")
